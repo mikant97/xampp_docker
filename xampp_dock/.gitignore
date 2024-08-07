@@ -1,0 +1,5 @@
+mysql_data/*.sock
+mysql_data/*.pid
+mysql_data/*.cnf
+mysql_data/*.index
+mysql_data/*.ibd

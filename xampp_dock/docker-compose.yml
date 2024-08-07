@@ -1,0 +1,35 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile 
+    ports: 
+      -  "80:80"     #questa riga mappa la porta del tuo pc alla porta del contenitore 
+    depends_on: 
+      -  db     #questa riga collega questo contenitore al contenitore del database 
+    volumes: 
+      -  ./html:/var/www/html     #questa riga mappa il contenuto di ./html nel tuo pc alla /var/www/html del contenitore 
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: my_database
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+        
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8080:80"    #this line maps your pc port to the container port
+    depends_on:
+      - db    #this line links this container to the db container
+    environment:
+      PMA_HOST: db
+      
+volumes:
+    mysql_data:
+
